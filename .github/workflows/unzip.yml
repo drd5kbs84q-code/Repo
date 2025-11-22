@@ -1,0 +1,27 @@
+name: Unzip ZIP File
+
+on:
+  workflow_dispatch:   # Cho phép bạn chạy thủ công
+
+jobs:
+  unzip_file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install unzip tool
+        run: sudo apt-get install unzip
+
+      - name: Unzip file
+        run: |
+          unzip lingoflash-android.zip -d extracted
+
+      - name: Commit unzipped files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Unzipped file using GitHub Actions"
+          git push
